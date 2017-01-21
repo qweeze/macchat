@@ -1,10 +1,15 @@
 from __future__ import print_function
 
+import os
 import click
 from macchat.client import ChatClient
 
 
 def main():
+
+    if not os.geteuid() == 0:
+        exit('You must be root to run this program\n')
+
     client = ChatClient()
 
     client.ui.cli.output.erase_screen()

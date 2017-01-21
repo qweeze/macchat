@@ -4,7 +4,7 @@ from threading import Thread
 from Queue import Queue
 from scapy.all import Ether, Raw, sendp
 
-from . import conf
+from .conf import config
 
 
 class Sender(object):
@@ -18,12 +18,14 @@ class Sender(object):
         self.encryptor = encryptor
         self.sender_q = Queue(maxsize=1024)
         # generating a fake mac address
-        self.src = (conf.MAC_ADDR[:9] + ':'.join('{:02x}'.format(
+        self.src = (config['MAC_ADDR'][:9] + ':'.join('{:02x}'.format(
             random.randint(0x00, i)) for i in (0x7f, 0xff, 0xff)))
 
         def send_packet():
             while True:
-                sendp(self.sender_q.get(), iface=conf.get('IFACE'), verbose=False)
+                sendp(self.sender_q.get(),
+                      iface=config.get('IFACE') or None,
+                      verbose=0)
                 self.sender_q.task_done()
 
         self.sender_thread = Thread(target=send_packet)
@@ -40,5 +42,5 @@ class Sender(object):
         payload[1:1 + len(data)] = data
         payload = payload[:self.MAX_MSG_LENGTH]
         encrypted = self.encryptor.encrypt(str(payload))
-        pck = Ether(src=self.src, dst=conf.MAC_ADDR)/Raw(load=encrypted)
+        pck = Ether(src=self.src, dst=config['MAC_ADDR'])/Raw(load=encrypted)
         self.sender_q.put(pck)

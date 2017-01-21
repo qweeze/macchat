@@ -1,7 +1,8 @@
-import sys
-_self = sys.modules[__name__]
-get = lambda v, default=None: getattr(_self, v, default)
+import os
+from configobj import ConfigObj
 
-MAC_ADDR = '0a:00:00:00:00:00'
-DEBUG = True
-USERNAME = 'qweeze'
+CONF_FILE = '.macchatrc'
+
+config = ConfigObj(os.path.join(os.path.abspath(
+    os.path.dirname(__file__)), CONF_FILE))
+config.update(ConfigObj(os.path.expanduser(CONF_FILE)))

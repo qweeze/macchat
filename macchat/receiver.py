@@ -3,7 +3,7 @@ from threading import Thread
 from Queue import Queue
 from scapy.all import sniff, Raw, Ether
 
-from . import conf
+from .conf import config
 
 
 class Receiver(object):
@@ -12,7 +12,7 @@ class Receiver(object):
         self.encryptor = encryptor
         self.input_q = Queue(maxsize=1024)
 
-        flt = 'ether dst {}'.format(conf.MAC_ADDR)
+        flt = 'ether dst {}'.format(config['MAC_ADDR'])
         self.receiver_thread = Thread(
             target=lambda: sniff(filter=flt, prn=self.input_q.put, store=False))
         self.processor_thread = Thread(target=self.process_message)

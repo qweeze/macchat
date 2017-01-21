@@ -21,6 +21,7 @@ setup(
     author_email='qweeeze@gmail.com',
     description='A simple broadcast ethernet messenger',
     packages=['macchat'],
+    package_data={'macchat': ['.macchatrc']},
     entry_points='''
         [console_scripts]
         macchat=macchat.main:main
