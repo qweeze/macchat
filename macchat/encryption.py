@@ -1,4 +1,5 @@
 import hashlib
+import six
 from Crypto.Cipher import AES
 from Crypto import Random
 from Crypto.Hash import HMAC
@@ -13,7 +14,12 @@ class AESCipher:
         self.key, self.hmac_key = derived[:32], derived[32:]
 
         BS = 16
-        self.pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
+
+        self.pad = (
+            lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
+        ) if six.PY2 else (
+            lambda s: s.decode() + (BS - len(s) % BS) * chr(BS - len(s) % BS)
+        )
         self.unpad = lambda s: s[:-ord(s[len(s) - 1:])]
 
     def encrypt(self, raw):

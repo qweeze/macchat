@@ -1,7 +1,7 @@
 import random
 import atexit
 from threading import Thread
-from Queue import Queue
+from six.moves.queue import Queue
 from scapy.all import Ether, Raw, sendp
 
 from .conf import config
@@ -36,11 +36,9 @@ class Sender(object):
         self.sender_thread.start()
 
     def send(self, event, data=''):
-        payload = bytearray(self.MIN_MSG_LENGTH)
-        payload[0] = event
-        data = data.encode('utf8')
-        payload[1:1 + len(data)] = data
+        payload = (chr(event) + data).encode('utf8')
+        payload += '\0'.encode() * (self.MIN_MSG_LENGTH - len(payload))
         payload = payload[:self.MAX_MSG_LENGTH]
-        encrypted = self.encryptor.encrypt(str(payload))
+        encrypted = self.encryptor.encrypt(payload)
         pck = Ether(src=self.src, dst=config['MAC_ADDR'])/Raw(load=encrypted)
         self.sender_q.put(pck)

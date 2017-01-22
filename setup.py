@@ -27,10 +27,12 @@ setup(
         macchat=macchat.main:main
     ''',
     install_requires=[
-        'scapy',
+        'six',
+        'configobj',
         'prompt_toolkit==1.0.9',
         'pycrypto',
-        'click==6.6'
+        'click==6.6',
+        'scapy'
     ],
     classifiers=[
     ],

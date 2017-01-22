@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from threading import Thread
-from Queue import Queue
+from six.moves.queue import Queue
 from scapy.all import sniff, Raw, Ether
 
 from .conf import config

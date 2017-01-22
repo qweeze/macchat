@@ -64,7 +64,7 @@ class UI(object):
         self.user_colors = {}
 
         colors = itertools.cycle(('red', 'green', 'yellow', 'blue', 'magenta'))
-        self.get_color = lambda: colors.next()
+        self.get_color = lambda: next(colors)
 
 
     def publish_message(self, user_id, username, msg):
