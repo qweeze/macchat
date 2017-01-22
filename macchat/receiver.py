@@ -30,6 +30,7 @@ class Receiver(object):
             encrypted = pck.getlayer(Raw).load
             raw = self.encryptor.decrypt(encrypted)
             if raw:
+                raw = raw.decode('utf8')
                 event, data = ord(raw[0]), raw[1:].rstrip('\0')
                 self.handler(addr, event, data)
             self.input_q.task_done()

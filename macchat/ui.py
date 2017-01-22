@@ -74,7 +74,7 @@ class UI(object):
         color = self.user_colors[user_id]
         width = self.cli.output.get_size().columns
         text = textwrap.fill(
-            msg.decode('utf8'), int(width*0.75), subsequent_indent='  '
+            msg, int(width*0.75), subsequent_indent='  '
         )
         print('{}{}'.format(
             click.style('{}: '.format(username), fg=color),
