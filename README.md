@@ -6,7 +6,7 @@ A toy serverless LAN instant messenger.
 </p>
 
 Messages are transported in raw ethernet frames' payload; therefore their length is limited to 1500 bytes and 
-communication is restricted by broadcast domain.
+communication is restricted to broadcast domain.
 
 Command line interface is implemented with [Python Prompt Toolkit](https://github.com/jonathanslenders/python-prompt-toolkit/).
 Network interactions rely on [Scapy](https://github.com/secdev/scapy) module.
