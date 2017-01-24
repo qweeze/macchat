@@ -9,7 +9,7 @@ Messages are transported in raw ethernet frames' payload; therefore their length
 communication is restricted to broadcast domain.
 
 Command line interface is implemented with [Python Prompt Toolkit](https://github.com/jonathanslenders/python-prompt-toolkit/).
-Network interactions rely on [Scapy](https://github.com/secdev/scapy) module.
+Network interactions rely on [Scapy](https://github.com/secdev/scapy) package.
 
 ## Installation
 ```
